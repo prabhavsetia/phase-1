@@ -1,0 +1,40 @@
+#define trigPin 12;
+#define echoPin 13;
+
+long duration;
+int distance;
+int Buzzer = 8; 
+int ledPin= 6; 
+
+void setup() {
+        Serial.begin (9600); 
+        pinMode(12, OUTPUT); 
+        pinMode(13, INPUT);
+        pinMode(8, OUTPUT);
+        pinMode(6, OUTPUT);
+}
+  int ledState = LOW;
+  long previousMillis = 0; 
+  long interval = 100;
+
+void loop() {
+
+    digitalWrite(12, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(12, LOW);
+    duration = pulseIn(13, HIGH);
+    distance = (duration*0.034/2);
+    if (distance >= 200 || distance <= 0) 
+        {
+        Serial.println("no object detected");
+        digitalWrite(8,LOW);
+        digitalWrite(6,LOW);
+        }
+  else {
+        Serial.println("object detected \n");
+        Serial.print("distance= ");              
+        Serial.print(distance);        
+        tone(8,400);              
+        digitalWrite(6,HIGH);
+  }
+}
